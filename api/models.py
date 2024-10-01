@@ -9,7 +9,7 @@ class Venue(models.Model):
     full_name = models.CharField(max_length=255)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    altitude = models.FloatField(blank=True)
+    altitude = models.FloatField(blank=True, null=True)
 
     @property
     def coords(self):
@@ -17,3 +17,20 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+# Custom User Model
+class CustomUser(AbstractUser):
+    ROLE_CHOICES = [
+        ('teacher', 'Teacher'),
+        ('teacher', 'Student'),
+        ('admin', 'Admin'),
+    ]
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    role = models.CharField(max_length=10,
+                            choices=ROLE_CHOICES, default='student')
+
+    def __str__(self):
+        return f'{self.username} - {self.get_role_display()}'
