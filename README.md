@@ -21,7 +21,7 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 
-\`\`\`bash
+\`\`\`
 git clone https://github.com/yourusername/attendance-system.git
 cd attendance-system
 \`\`\`
@@ -29,7 +29,7 @@ cd attendance-system
 
 ### 2. Install the Requirements
 
-\`\`\`bash
+\`\`\`
 pip install django
 pip install djangorestframework
 pip install vincenty
@@ -41,7 +41,7 @@ pip install vincenty
 
 Start the Django development server:
 
-\`\`\`bash
+\`\`\`
 python manage.py runserver
 \`\`\`
 
@@ -58,15 +58,16 @@ The project will be available at \`http://127.0.0.1:8000/\`.
 
 #### Example Response:
 
-\`\`\`json
+\`\`\`
 {
-  "distance_km": 4.12
+    "distance": 458.703231,
+    "Am I Near": "Your are far"
 }
 \`\`\`
 
 #### Example using `cURL`:
 
-\`\`\`bash
+\`\`\`
 curl --location 'http://localhost:8000/api/get_distance/?name=ELF&latitude=5.043280051864717&longitude=7.973864477393281' \
 --header 'Content-Type: application/json'
 \`\`\`
