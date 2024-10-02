@@ -23,14 +23,14 @@ class Venue(models.Model):
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('teacher', 'Teacher'),
-        ('teacher', 'Student'),
+        ('student', 'Student'),
         ('admin', 'Admin'),
     ]
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
+    email = models.EmailField(unique=True, blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+    reg_no = models.CharField(max_length=15, blank=True, null=True)
     role = models.CharField(max_length=10,
                             choices=ROLE_CHOICES, default='student')
 
     def __str__(self):
-        return f'{self.username} - {self.get_role_display()}'
+        return f'Username = {self.username} : Role = {self.get_role_display()}'
