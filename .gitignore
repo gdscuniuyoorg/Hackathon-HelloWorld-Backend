@@ -1,0 +1,75 @@
+# Python Bytecode
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Django specific files
+*.log
+*.pot
+*.py[cod]
+#db.sqlite3
+db.sqlite3-journal
+
+# Local development environment settings
+.env
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Virtual environments
+env/
+venv/
+ENV/
+ENV.*/
+env.bak/
+venv.bak/
+
+# Node.js build files (if using npm/yarn)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Static and media files
+/static/
+staticfiles/
+media/
+
+# Migrations (optional: keep them for deployment)
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/__pycache__/
+
+# Compiled translation files
+*.mo
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+__pycache__/
+
+# pytest cache
+.pytest_cache/
+
+# MyPy type checker cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# SQL files from dumps
+*.sql
+
+# Backup files and system files
+*.bak
+*.swp
+*~
+
