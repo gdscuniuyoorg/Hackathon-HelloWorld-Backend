@@ -23,7 +23,7 @@ class Venue(models.Model):
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('teacher', 'Teacher'),
-        ('teacher', 'Student'),
+        ('student', 'Student'),
         ('admin', 'Admin'),
     ]
     first_name = models.CharField(max_length=150)
