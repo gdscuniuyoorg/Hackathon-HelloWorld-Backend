@@ -18,7 +18,7 @@ def get_distance(request):
 
     def is_near(length):
         if length > 50:
-            return f'Your are far'
+            return f'You are far'
         else:
             return f'You are near'
 
