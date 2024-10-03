@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 # Create your models here.
@@ -33,3 +34,32 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f'Username = {self.username} : Role = {self.get_role_display()}'
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    teachers = models.ForeignKey(CustomUser, on_delete=models.SET_NULL,
+                                 null=True, related_name='courses_taught')
+
+    def __str__(self):
+        return self.name
+
+
+class Attendance(models.Model):
+    STATUS_CHOICES = [
+        ('present', 'Present'),
+        ('absent', 'Absent'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    date = models.DateField(default=timezone.now)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    time = models.TimeField(default=timezone.now)
+    venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'date', 'course'],
+                                    name='unique_user_date')
+        ]
