@@ -22,7 +22,6 @@ class Venue(models.Model):
 # Custom User Model
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
-        ('teacher', 'Teacher'),
         ('student', 'Student'),
         ('admin', 'Admin'),
     ]
