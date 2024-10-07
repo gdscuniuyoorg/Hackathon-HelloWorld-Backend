@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from vincenty import vincenty
-from .models import Venue
-from .serializers import CustomUserSerializer
+from .models import Venue, Attendance 
+from .serializers import CustomUserSerializer, AttendanceSerializer
 
 
 @api_view(['GET'])
@@ -37,3 +37,4 @@ def register_user(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

@@ -50,6 +50,7 @@ class Attendance(models.Model):
     STATUS_CHOICES = [
         ('present', 'Present'),
         ('absent', 'Absent'),
+        ('review','Review')
     ]
 
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
@@ -57,7 +58,7 @@ class Attendance(models.Model):
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     time = models.TimeField(default=timezone.now)
     venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES)
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['user', 'date', 'course'],

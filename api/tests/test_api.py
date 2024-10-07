@@ -17,7 +17,7 @@ class GetDistanceAPITestCase(TestCase):
     #Testing Far
     def test_get_distance_far(self):
         response = self.client.get(self.url,Utils.params_far())
-        Utils.custom_assert(response,'distance', 'You are farr', 'Am I Near')
+        Utils.custom_assert(response,'distance', 'You are far', 'Am I Near')
         
     #Testing missing params
     #Api rejects bad request
