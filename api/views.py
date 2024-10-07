@@ -44,8 +44,7 @@ def register_user(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-<<<<<<< HEAD
-=======
+
 
 class StudentDetailView(generics.RetrieveAPIView):
     """
@@ -99,4 +98,4 @@ class AttendanceList(generics.ListAPIView):
             time__range=(start_time, stop_time))
 
         return queryset
->>>>>>> 2cbf1c57fdd0b83d21daa7df5d7f7a0d9009b3b3
+
