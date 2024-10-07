@@ -1,9 +1,15 @@
-from rest_framework import status
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from vincenty import vincenty
-from .models import Venue, Attendance 
-from .serializers import CustomUserSerializer, AttendanceSerializer
+from .models import Venue, Attendance, CustomUser
+from .serializers import (CustomUserSerializer, AttendanceSerializer,
+                          StudentDetailSerializer)
+
 
 
 @api_view(['GET'])
@@ -38,3 +44,59 @@ def register_user(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+<<<<<<< HEAD
+=======
+
+class StudentDetailView(generics.RetrieveAPIView):
+    """
+    API endpoint to retrieve a student's details
+    """
+    queryset = CustomUser.objects.filter(role='student')
+    serializer_class = StudentDetailSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        student_id = self.kwargs.get('reg_no')
+        return CustomUser.objects.get(reg_no=student_id)
+
+
+@login_required
+def teacher_dashboard(request):
+    if request.user.role == 'teacher':
+        pass
+    else:
+        return HttpResponse("Access Denied", status=403)
+
+
+class AttendanceCreate(generics.CreateAPIView):
+    """
+    API endpoint that allows Attendance to be created.
+    """
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class AttendanceList(generics.ListAPIView):
+    """
+        View to get attendance within a time frame
+    """
+    serializer_class = AttendanceSerializer
+
+    def get_queryset(self):
+        course = self.request.query_params.get('course', None)
+        date = self.request.query_params.get('date', None)
+        start_time = self.request.query_params.get('start_time', None)
+        stop_time = self.request.query_params.get('stop_time', None)
+
+        queryset = Attendance.objects.all()
+
+        queryset = queryset.filter(
+            course__name=course, date=date,
+            time__range=(start_time, stop_time))
+
+        return queryset
+>>>>>>> 2cbf1c57fdd0b83d21daa7df5d7f7a0d9009b3b3
