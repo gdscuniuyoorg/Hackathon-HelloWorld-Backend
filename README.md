@@ -282,3 +282,77 @@ Note : use your browser to get the pdf
 
 #### Example Response: 
 A pdf should be downloaded 
+
+
+### Venue Add
+
+- **URL**: /api/venueadd/
+- **Method**: \POST\
+- **Description**: API to create venue
+
+| Parameter  | Type   | Required | Example                                        |
+|------------|--------|----------|------------------------------------------------|
+| short_name | string | yes      | PTDF                                           |
+| full_name  | string | yes      | Petroleum Technology<br/> Development Facility |
+| latitude   | number | yes      | 7.97588646295044                               |
+| longitude  | number | yes      | 5.041485459813603                              |
+
+#### Example using `cURL`:
+```shell
+curl --location 'http://localhost:8000/api/venueadd/' \
+--header 'Authorization: Token c0af34fd2f8fac7cb84595a9ca18789f465cab35' \
+--header 'Content-Type: application/json' \
+--data '{
+        "short_name": "PTDF",
+        "full_name": "Petroleum Technology Development Facility",
+        "latitude": 7.97588646295044,
+        "longitude": 5.041485459813603
+    }'
+```
+
+#### Example Response:
+```json
+{
+    "short_name": "PTDF",
+    "full_name": "Petroleum Technology Development Fund",
+    "latitude": 7.97588646295044,
+    "longitude": 5.041485459813603
+}
+```
+
+
+### Venue List
+- **URL**: /api/venuelist/
+- **Method**: \GET\
+- **Description**: API to list the venues
+
+| Parameter  | Type   | Required | Example                                        |
+|------------|--------|----------|------------------------------------------------|
+| short_name | string | yes      | PTDF                                           |
+| full_name  | string | yes      | Petroleum Technology<br/> Development Facility |
+| latitude   | number | yes      | 7.97588646295044                               |
+| longitude  | number | yes      | 5.041485459813603                              |
+
+#### Example using `cURL`:
+```shell
+curl --location 'http://localhost:8000/api/venuelist/' \
+--header 'Authorization: Token c0af34fd2f8fac7cb84595a9ca18789f465cab35'
+```
+
+#### Example Response:
+```json
+[
+    {
+        "short_name": "ELF",
+        "full_name": "Engineering Lecture Facility",
+        "latitude": 7.97539261202521,
+        "longitude": 5.04020118110904
+    },
+    {
+        "short_name": "PTDF",
+        "full_name": "Petroleum Technology Development Facility",
+        "latitude": 7.97588646295044,
+        "longitude": 5.041485459813603
+    }
+]
+```

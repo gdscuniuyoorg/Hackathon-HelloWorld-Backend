@@ -11,7 +11,6 @@ class Venue(models.Model):
     full_name = models.CharField(max_length=255, unique=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    altitude = models.FloatField(blank=True, null=True)
 
     @property
     def coords(self):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-from .models import CustomUser, Attendance
+from .models import CustomUser, Attendance, Venue
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -42,3 +42,9 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Attendance.objects.create(**validated_data)
+
+
+class VenueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = ['short_name', 'full_name', 'latitude', 'longitude']

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from vincenty import vincenty
 from .models import Venue, Attendance, CustomUser
 from .serializers import (CustomUserSerializer, AttendanceSerializer,
-                          StudentDetailSerializer)
+                          StudentDetailSerializer, VenueSerializer)
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import requests
@@ -150,3 +150,21 @@ def pdfgen(request, course, date, start_time, stop_time):
     response['Content-Disposition'] = 'attachment; filename="generated_pdf.pdf"'
 
     return response
+
+
+class VenueCreate(generics.CreateAPIView):
+    """
+    API to create venue
+    """
+    queryset = Venue.objects.all()
+    serializer_class = VenueSerializer
+
+
+class VenueList(generics.ListAPIView):
+    """
+    API to get all venues
+    """
+    queryset = Venue.objects.all()
+    serializer_class = VenueSerializer
+
+
