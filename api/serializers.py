@@ -38,7 +38,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attendance
-        fields = ['reg_no', 'time', 'course', 'date', 'venue']
+        fields = ['reg_no', 'time', 'course', 'date']
 
     def create(self, validated_data):
         return Attendance.objects.create(**validated_data)

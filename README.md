@@ -226,7 +226,7 @@ curl --location 'http://localhost:8000/api/attendanceadd/' \
 }
 ```
 
-### Attendance List
+### 5. Attendance List
 - **URL**: /api/attendancelist/
 - **Method**: \GET\
 - **Description**: Get attendance records for a course within a time frame
@@ -263,3 +263,22 @@ curl --location 'http://localhost:8000/api/attendancelist/?course=GRE112&date=20
     }
 ]
 ```
+
+### PDF Generation
+- **URL**: /api/pdfgen/
+- **Method**: \GET\
+- **Description**: Generate pdf from attendance records
+
+| Parameter  | Type   | Required | Example    |
+|------------|--------|----------|------------|
+| course     | string | yes      | GRE111     |
+| date       | string | yes      | 2024-10-05 |
+| start_time | string | yes      | 16:45:34   |
+| stop_time  | string | yes      | 16:45:34   |
+
+#### Example:
+`http://localhost:8000/api/pdfgen/GRE112/2024-10-05/15:45:11/19:00:00/`
+Note : use your browser to get the pdf
+
+#### Example Response: 
+A pdf should be downloaded 

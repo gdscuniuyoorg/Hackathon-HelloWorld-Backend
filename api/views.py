@@ -1,6 +1,6 @@
-from datetime import datetime
+from io import BytesIO
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +9,9 @@ from vincenty import vincenty
 from .models import Venue, Attendance, CustomUser
 from .serializers import (CustomUserSerializer, AttendanceSerializer,
                           StudentDetailSerializer)
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+import requests
 
 
 @api_view(['GET'])
@@ -96,3 +99,54 @@ class AttendanceList(generics.ListAPIView):
             time__range=(start_time, stop_time))
 
         return queryset
+
+
+def pdfgen(request, course, date, start_time, stop_time):
+    # Example: Making an API call to get JSON data (replace with your actual API call)
+    api_url = (f"http://localhost:8000/api/attendancelist/"
+               f"?course={course}&date={date}&"
+               f"start_time={start_time}&stop_time={stop_time}")
+    headers = {'Authorization': 'Token c0af34fd2f8fac7cb84595a9ca18789f465cab35'}
+    response = requests.get(api_url, headers=headers)
+
+    if response.status_code != 200:
+        return JsonResponse({'error': 'API call failed'}, status=400)
+
+    # This is our json data
+    data = response.json()
+
+    # Create bytestream buffer
+    buffer = BytesIO()
+
+    # Create a canvas
+    p = canvas.Canvas(buffer, pagesize=letter)
+    p.setFont("Helvetica", 12)
+
+    p.drawString(10, 750, "Attendance Report")
+
+    # Loop over the JSON data and add it to the PDF
+    y_position = 720
+    for item in data:
+        # Assuming data is a list of dictionaries with keys like 'name', 'date', 'status'
+        reg_no = item.get('reg_no', 'N/A')
+        time = item.get('time', 'N/A')
+        course = item.get('course', 'N/A')
+        date = item.get('date', 'N/A')
+
+        # Add data to the PDF
+        p.drawString(10, y_position, f"Reg No: {reg_no} | Time: {time} | Course: {course} | Date: {date}  |")
+        y_position -= 20  # Move to the next line
+
+    # Close the PDF object
+    p.showPage()
+    p.save()
+
+    # Get the value of the BytesIO buffer and write it to the response
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    # Return a response as a PDF file
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="generated_pdf.pdf"'
+
+    return response
