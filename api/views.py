@@ -1,10 +1,13 @@
 from io import BytesIO
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 from vincenty import vincenty
 from .models import Venue, Attendance, CustomUser
 from .serializers import (CustomUserSerializer, AttendanceSerializer,
@@ -12,6 +15,8 @@ from .serializers import (CustomUserSerializer, AttendanceSerializer,
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import requests
+
+User = get_user_model()
 
 
 @api_view(['GET'])
@@ -168,3 +173,44 @@ class VenueList(generics.ListAPIView):
     serializer_class = VenueSerializer
 
 
+class CustomLoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        # Extract username and password from the request
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        # Authenticate the user
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            # If authentication was successful, get or create a token for the user
+            token, created = Token.objects.get_or_create(user=user)
+            # Return the token in the response
+            return Response({
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username
+            }, status=status.HTTP_200_OK)
+        else:
+            # If authentication failed, return an error message
+            return Response({
+                'error': 'Invalid credentials, please try again.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    # If any method other than POST is used, return 405 Method Not Allowed
+    def get(self, request, *args, **kwargs):
+        return Response({
+            'error': 'Method not allowed.'
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def put(self, request, *args, **kwargs):
+        return Response({
+            'error': 'Method not allowed.'
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def delete(self, request, *args, **kwargs):
+        return Response({
+            'error': 'Method not allowed.'
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)

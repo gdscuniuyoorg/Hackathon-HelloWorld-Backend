@@ -2,11 +2,12 @@ from django.urls import path, re_path
 from rest_framework.authtoken.views import obtain_auth_token
 from .views import (get_distance, register_user, AttendanceList,
                     AttendanceCreate, StudentDetailView, pdfgen,
-                    VenueCreate, VenueList)
+                    VenueCreate, VenueList, CustomLoginView)
 
 
 urlpatterns = [
     path('token/', obtain_auth_token, name='api-token-auth'),
+    path('login/', CustomLoginView.as_view(), name='login'),
     path('getdistance/', get_distance, name='get_distance'),
     path('register/', register_user, name='register'),
     path('student/<slug:reg_no>/', StudentDetailView.as_view(),

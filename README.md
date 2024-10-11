@@ -356,3 +356,106 @@ curl --location 'http://localhost:8000/api/venuelist/' \
     }
 ]
 ```
+
+### 3.Token Generator
+- **URL**: /api/login/
+- **Method**: \POST\
+- **Description**: Generates tokens used for authentication
+
+#### Example using `cURL`:
+```shell
+curl --location 'http://localhost:8000/api/login/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "username": "admin",
+    "password": "admin"
+}'
+```
+
+#### Example Response:
+```json
+
+{   
+  "token": "c0af34fd2f8fac7cb84595a9ca18789f465cab35",
+  "user_id": 1, 
+  "username": "admin"
+}
+
+```
+### Using the login in react 
+
+#### Here’s a simple function using fetch to send a POST request to your Django login API from a React component:
+```jsx
+const login = async (username, password) => {
+  try {
+    const response = await fetch('http://localhost:8000/api/custom-login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
+
+    const data = await response.json();
+    console.log('Login successful! Token:', data.token);
+
+    // Optionally, store the token in localStorage for future API requests
+    localStorage.setItem('token', data.token);
+    
+    return data; // Return the response data if needed
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+// Example usage:
+
+ login('admin', 'admin');
+
+```
+
+
+#### Once you've successfully obtained the token, you can use it in your API requests by including it in the Authorization header. Here's a simple example of how to use the token in subsequent API requests in React:
+##### Here’s how you can use the token stored in localStorage for authenticated API requests:
+```jsx
+const fetchDataWithToken = async () => {
+  const token = localStorage.getItem('token'); // Get the token from localStorage
+
+  try {
+    const response = await fetch('http://localhost:8000/api/protected-endpoint/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`, // Include the token in the Authorization header
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Request failed');
+    }
+
+    const data = await response.json();
+    console.log('Data received:', data);
+    
+    return data; // Return the fetched data if needed
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+// Example usage:
+fetchDataWithToken();
+
+```
+
+Explanation:
+
+-  Token Retrieval: We fetch the token from localStorage where it was saved during the login process.
+- Authorization Header: The token is included in the Authorization header as Token <your_token>. 
+- API Request: We make a GET request to the protected API endpoint. You can change the method to POST, PUT, etc., if needed.
+- Error Handling: If the request fails, it throws an error that can be caught and logged.
