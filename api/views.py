@@ -15,6 +15,12 @@ from .serializers import (CustomUserSerializer, AttendanceSerializer,
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import requests
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+def home(request):
+    return HttpResponseRedirect(reverse('attendance_list'))  # Adjust based on your preferred view
+
 
 User = get_user_model()
 
