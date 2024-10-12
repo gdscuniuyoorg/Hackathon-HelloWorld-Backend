@@ -24,3 +24,4 @@ urllib3==2.2.3
 vincenty==0.1.4
 whitenoise==6.7.0
 zope.interface==7.0.3
+gunicorn
