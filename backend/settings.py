@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # settings.py
-CORS_ALLOWED_ORIGINS = ['https://helloworld-cfno.onrender.com']
+CORS_ALLOWED_ORIGINS = ['https://helloworld-cfno.onrender.com','.onrender.com']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
     'content-disposition',
