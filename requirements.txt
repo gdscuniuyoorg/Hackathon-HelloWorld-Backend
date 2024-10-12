@@ -20,7 +20,6 @@ tzdata==2024.2
 urllib3==2.2.3
 vincenty==0.1.4
 zope.interface==7.0.3
-django-cors-headers==3.14.2024
 Django==4.2
 gunicorn
 psycopg2-binary
