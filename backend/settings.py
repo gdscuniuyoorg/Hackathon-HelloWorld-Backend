@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-98$vrn_vqn(kii@*22@6j0!e7pmwr647%uw=1$)_k@*=jmea@b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['helloback.onrender.com']
+ALLOWED_HOSTS = ['helloback.onrender.com','localhost','http://127.0.0.1:8000']
 
 # Application definition
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # settings.py
-CORS_ALLOWED_ORIGINS = ['https://helloworld-cfno.onrender.com','.onrender.com']
+CORS_ALLOWED_ORIGINS = ['https://helloworld-cfno.onrender.com','https://onrender.com']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
     'content-disposition',
