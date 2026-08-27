@@ -35,6 +35,7 @@ yarn-error.log
 /static/
 staticfiles/
 media/
+temp_auto_push.bat
 
 # Migrations (optional: keep them for deployment)
 */migrations/*.pyc
@@ -72,7 +73,5 @@ dmypy.json
 *.swp
 *~
 
-branch_structure.json
-temp_auto_push.bat
-temp_interactive_push.bat
 .gitignore
+branch_structure.json
